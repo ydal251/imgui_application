@@ -47,7 +47,7 @@ set(LIB_INCLUDE_PRIVATE_DIRECTORIES
 set(IMGUI_APPLICATION_SHELL_MINIMAL
     ${CMAKE_CURRENT_SOURCE_DIR}/web_shell/shell_minimal.html
 
-    PARENT_SCOPE
+    CACHE INTERNAL ""
 )
 
 # ----------------------------------------------------------
