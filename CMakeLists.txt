@@ -14,9 +14,8 @@ set(IMGUI_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui-1.89.7/")
 
 set(LIB_INCLUDE_DIRECTORIES
 
-    # ImGui + backends includes
+    # ImGui
     ${IMGUI_DIR}/
-    ${IMGUI_DIR}/backends/
 
     # ImGui::cpp includes
     ${IMGUI_DIR}/misc/cpp/
@@ -25,40 +24,10 @@ set(LIB_INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/
 )
 
-# ----------------------------------------------------------
-# Export (by using PARENT_SCOPE) public variables to be
-# usable in parent scope:
+set(LIB_INCLUDE_PRIVATE_DIRECTORIES
 
-#[[
-    Exported IMGUI_APPLICATION_INCLUDE_DIRECTORIES must be
-    used to add that path into includes search pathes:
-
-    add_subdirectory(imgui_application)
-
-    add_executable(${CMAKE_PROJECT_NAME}
-        "${CMAKE_CURRENT_SOURCE_DIR}/main.cpp"
-    )
-
-    target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC
-        ${IMGUI_APPLICATION_INCLUDE_DIRECTORIES}
-    )
-
-    target_link_libraries(${CMAKE_PROJECT_NAME}
-        imgui_application GL
-    )
-]]
-set(IMGUI_APPLICATION_INCLUDE_DIRECTORIES
-
-    # ImGui includes
-    ${IMGUI_DIR}/
-
-    # ImGui::cpp includes
-    ${IMGUI_DIR}/misc/cpp/
-
-    # ImGui_Application includes
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/
-
-    PARENT_SCOPE
+    # ImGui backends includes
+    ${IMGUI_DIR}/backends/
 )
 
 #[[
@@ -82,7 +51,6 @@ set(IMGUI_APPLICATION_SHELL_MINIMAL
 )
 
 # ----------------------------------------------------------
-
 
 
 set(LIB_HEADERS
@@ -131,8 +99,12 @@ add_library(${PROJECT_NAME} STATIC
     ${LIB_HEADERS} ${LIB_SOURCES}
 )
 
-target_include_directories(${PROJECT_NAME} PRIVATE
+target_include_directories(${PROJECT_NAME} PUBLIC
     ${LIB_INCLUDE_DIRECTORIES}
+)
+
+target_include_directories(${PROJECT_NAME} PRIVATE
+    ${LIB_INCLUDE_PRIVATE_DIRECTORIES}
 )
 
 target_compile_options(${PROJECT_NAME} PRIVATE
